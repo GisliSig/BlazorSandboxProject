@@ -1,3 +1,6 @@
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
 using GrpcTodo;
@@ -22,7 +25,15 @@ namespace BlazorSandboxProject.Web.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddSingleton(services =>
+            builder.Services
+             .AddBlazorise(options =>
+             {
+                 options.ChangeTextOnKeyPress = true;
+             })
+             .AddBootstrapProviders()
+             .AddFontAwesomeIcons();
+
+            builder.Services.AddScoped(services =>
             {
                 var httpClient = new HttpClient(new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()));
                 var baseUri = services.GetRequiredService<NavigationManager>().BaseUri;
@@ -33,7 +44,13 @@ namespace BlazorSandboxProject.Web.Client
 
             });
 
-            await builder.Build().RunAsync();
+            var host = builder.Build();
+
+            host.Services
+              .UseBootstrapProviders()
+              .UseFontAwesomeIcons();
+
+            await host.RunAsync();
         }
     }
 }

@@ -1,3 +1,6 @@
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using BlazorSandboxProject.Web.Server.EFContext;
 using BlazorSandboxProject.Web.Server.Services;
 using Grpc.Net.Client;
@@ -47,7 +50,7 @@ namespace BlazorSandboxProject.Web.Server
                 options.UseInMemoryDatabase(databaseName: "Todo");
             });
 
-            services.AddSingleton(services =>
+            services.AddScoped(services =>
             {
                 var httpClient = new HttpClient(new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()));
                 var baseUri = services.GetRequiredService<NavigationManager>().BaseUri;
@@ -57,6 +60,13 @@ namespace BlazorSandboxProject.Web.Server
                 return new Todo.TodoClient(channel);
 
             });
+            services
+             .AddBlazorise(options =>
+             {
+                 options.ChangeTextOnKeyPress = true;
+             })
+             .AddBootstrapProviders()
+             .AddFontAwesomeIcons();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

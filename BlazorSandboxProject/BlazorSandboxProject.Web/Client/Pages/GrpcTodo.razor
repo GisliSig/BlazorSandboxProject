@@ -1,9 +1,9 @@
 ﻿@page "/todo" 
 <EditForm Model="request" OnValidSubmit="AddTodo">
     <FluentValidationValidator />
-    <InputText class="form-control" @bind-Value="request.Text"></InputText>
+    <TextEdit class="form-control" @bind-Text="request.Text"></TextEdit>
     <ValidationMessage For="() => request.Text"></ValidationMessage>
-    <button class="btn btn-primary" type="submit">Senda</button>
+    <Button Color="Color.Primary" Type="ButtonType.Submit">Senda</Button>
 </EditForm>
 
 @if(result != null)
