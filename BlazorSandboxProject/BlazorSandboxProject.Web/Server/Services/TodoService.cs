@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BlazorSandboxProject.Web.Server.EFContext;
 using Grpc.Core;
 using GrpcTodo;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorSandboxProject.Web.Server.Services
 {
@@ -27,6 +28,15 @@ namespace BlazorSandboxProject.Web.Server.Services
             await dbContext.SaveChangesAsync();
 
             return reply;
+        }
+
+        public override async Task<GetTodosResponse> GetTodos(GetTodosRequest request, ServerCallContext context)
+        {
+            var todos = await dbContext.Todo.Select(x => new TodoItem() { Id = x.Id.ToString(), Text = x.Text }).ToListAsync();
+            var response = new GetTodosResponse();
+            response.Todos.AddRange(todos);
+
+            return response;
         }
     }
 }

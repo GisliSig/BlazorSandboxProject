@@ -6,8 +6,22 @@
     <Button Color="Color.Primary" Type="ButtonType.Submit">Senda</Button>
 </EditForm>
 
-@if(result != null)
+@if(todos != null)
 {
-    <h2>@result</h2>
+  <Table>
+      <TableHeader>
+          <TableRow>
+              <TableHeaderCell>Tex</TableHeaderCell>
+          </TableRow>
+      </TableHeader>
+      <TableBody>
+          @foreach(var todo in todos)
+          {
+              <TableRow>
+                 <TableRowCell>@todo.Text</TableRowCell>
+              </TableRow>
+          }
+      </TableBody>
+  </Table>
 }
 

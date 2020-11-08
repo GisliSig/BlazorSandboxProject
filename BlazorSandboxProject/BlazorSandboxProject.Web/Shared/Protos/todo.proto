@@ -4,6 +4,7 @@ package todo;
 
 service Todo {
   rpc AddTodo (AddTodoRequest) returns (AddTodoReply);
+  rpc GetTodos(GetTodosRequest) returns (GetTodosResponse);
 }
 
 message AddTodoRequest {
@@ -12,4 +13,17 @@ message AddTodoRequest {
 
 message AddTodoReply {
   string text = 1;
+}
+
+message GetTodosRequest{
+
+}
+
+message GetTodosResponse{
+	repeated TodoItem todos = 1;
+}
+
+message TodoItem {
+	string id = 1;
+	string text = 2;
 }
