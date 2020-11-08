@@ -1,5 +1,4 @@
 ﻿using BlazorSandboxProject.Web.Shared;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace BlazorSandboxProject.Web.Server.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
