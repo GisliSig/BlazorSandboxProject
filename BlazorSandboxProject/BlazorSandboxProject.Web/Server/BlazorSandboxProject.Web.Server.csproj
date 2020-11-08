@@ -5,10 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.33.1" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.33.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0-rc.2.20475.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.9" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BlazorSandboxProject.Domain\BlazorSandboxProject.Domain.csproj" />
     <ProjectReference Include="..\Client\BlazorSandboxProject.Web.Client.csproj" />
     <ProjectReference Include="..\Shared\BlazorSandboxProject.Web.Shared.csproj" />
   </ItemGroup>

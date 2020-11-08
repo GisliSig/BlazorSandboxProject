@@ -1,0 +1,15 @@
+syntax = "proto3";
+option csharp_namespace = "GrpcTodo";
+package todo;
+
+service Todo {
+  rpc AddTodo (AddTodoRequest) returns (AddTodoReply);
+}
+
+message AddTodoRequest {
+  string text = 1;
+}
+
+message AddTodoReply {
+  string text = 1;
+}

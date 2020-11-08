@@ -1,8 +1,14 @@
+using BlazorSandboxProject.Web.Server.EFContext;
+using BlazorSandboxProject.Web.Server.Services;
+using Grpc.Net.Client;
+using Grpc.Net.Client.Web;
+using GrpcTodo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +31,7 @@ namespace BlazorSandboxProject.Web.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddGrpc();
             services.AddRazorPages();
             services.AddScoped<HttpClient>(s =>
             {
@@ -33,6 +40,22 @@ namespace BlazorSandboxProject.Web.Server
                 {
                     BaseAddress = new Uri(navigationManager.BaseUri)
                 };
+            });
+
+            services.AddDbContext<TodoDBContext>(options =>
+            {
+                options.UseInMemoryDatabase(databaseName: "Todo");
+            });
+
+            services.AddSingleton(services =>
+            {
+                var httpClient = new HttpClient(new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()));
+                var baseUri = services.GetRequiredService<NavigationManager>().BaseUri;
+                var channel = GrpcChannel.ForAddress(baseUri, new GrpcChannelOptions { HttpClient = httpClient });
+
+                // Now we can instantiate gRPC clients for this channel
+                return new Todo.TodoClient(channel);
+
             });
         }
 
@@ -57,8 +80,11 @@ namespace BlazorSandboxProject.Web.Server
 
             app.UseRouting();
 
+            app.UseGrpcWeb();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<TodoService>().EnableGrpcWeb();
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapFallbackToPage("/_Host");

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSandboxProject.Web.Cl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSandboxProject.Web.Shared", "BlazorSandboxProject.Web\Shared\BlazorSandboxProject.Web.Shared.csproj", "{FC066AE7-07E1-4A81-A9E5-E23B4ADBB244}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSandboxProject.Domain", "BlazorSandboxProject.Domain\BlazorSandboxProject.Domain.csproj", "{6BAD8FBA-7589-4C8D-B4D9-0E8935CF7805}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FC066AE7-07E1-4A81-A9E5-E23B4ADBB244}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC066AE7-07E1-4A81-A9E5-E23B4ADBB244}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC066AE7-07E1-4A81-A9E5-E23B4ADBB244}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BAD8FBA-7589-4C8D-B4D9-0E8935CF7805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BAD8FBA-7589-4C8D-B4D9-0E8935CF7805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BAD8FBA-7589-4C8D-B4D9-0E8935CF7805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BAD8FBA-7589-4C8D-B4D9-0E8935CF7805}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
