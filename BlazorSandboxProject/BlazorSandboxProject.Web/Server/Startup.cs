@@ -2,6 +2,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using BlazorSandboxProject.Web.Server.EFContext;
+using BlazorSandboxProject.Web.Server.Hubs;
 using BlazorSandboxProject.Web.Server.Services;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
@@ -34,6 +35,12 @@ namespace BlazorSandboxProject.Web.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
             services.AddGrpc();
             services.AddRazorPages();
             services.AddScoped<HttpClient>(s =>
@@ -83,7 +90,7 @@ namespace BlazorSandboxProject.Web.Server
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseResponseCompression();
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
@@ -97,6 +104,7 @@ namespace BlazorSandboxProject.Web.Server
                 endpoints.MapGrpcService<TodoService>().EnableGrpcWeb();
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapHub<TodoHub>("/todohub");
                 endpoints.MapFallbackToPage("/_Host");
             });
         }
